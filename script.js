@@ -1,7 +1,7 @@
 
- // =====================================
- // BRIGHTSTEPS - APPLICATION DATA
- // =====================================
+// =====================================
+// BRIGHTSTEPS - APPLICATION DATA
+// =====================================
 
 const modules = [
     {
@@ -83,7 +83,7 @@ const modules = [
                 picture: "images/blue.jpeg",
                 word: "Blue",
                 description: "This is the colour blue.",
-                audio: "Blue. This is the colour blue.",
+                audio: "This is the colour blue.",
                 question: "What colour is shown?",
                 options: ["Blue", "Red", "Green"],
                 answer: "Blue"
@@ -92,7 +92,7 @@ const modules = [
                 picture: "images/brown.jpeg",
                 word: "Brown",
                 description: "This is the colour brown.",
-                audio: "Brown. This is the colour brown.",
+                audio: "This is the colour brown.",
                 question: "What colour is shown?",
                 options: ["Pink", "Brown", "Yellow"],
                 answer: "Brown"
@@ -101,7 +101,7 @@ const modules = [
                 picture: "images/darkblue.jpeg",
                 word: "Dark Blue",
                 description: "This is the colour dark blue.",
-                audio: "Dark blue. This is the colour dark blue.",
+                audio: "This is the colour dark blue.",
                 question: "What colour is shown?",
                 options: ["Dark Blue", "Orange", "White"],
                 answer: "Dark Blue"
@@ -110,7 +110,7 @@ const modules = [
                 picture: "images/green.jpeg",
                 word: "Green",
                 description: "This is the colour green.",
-                audio: "Green. This is the colour green.",
+                audio: "This is the colour green.",
                 question: "What colour is shown?",
                 options: ["Purple", "Green", "Red"],
                 answer: "Green"
@@ -119,7 +119,7 @@ const modules = [
                 picture: "images/orange.jpeg",
                 word: "Orange",
                 description: "This is the colour orange.",
-                audio: "Orange. This is the colour orange.",
+                audio: "This is the colour orange.",
                 question: "What colour is shown?",
                 options: ["Orange", "Blue", "Brown"],
                 answer: "Orange"
@@ -128,7 +128,7 @@ const modules = [
                 picture: "images/pink.jpeg",
                 word: "Pink",
                 description: "This is the colour pink.",
-                audio: "Pink. This is the colour pink.",
+                audio: "This is the colour pink.",
                 question: "What colour is shown?",
                 options: ["Yellow", "Pink", "Green"],
                 answer: "Pink"
@@ -137,7 +137,7 @@ const modules = [
                 picture: "images/purple.jpeg",
                 word: "Purple",
                 description: "This is the colour purple.",
-                audio: "Purple. This is the colour purple.",
+                audio: "This is the colour purple.",
                 question: "What colour is shown?",
                 options: ["Purple", "White", "Blue"],
                 answer: "Purple"
@@ -146,7 +146,7 @@ const modules = [
                 picture: "images/red.jpeg",
                 word: "Red",
                 description: "This is the colour red.",
-                audio: "Red. This is the colour red.",
+                audio: "This is the colour red.",
                 question: "What colour is shown?",
                 options: ["Green", "Red", "Pink"],
                 answer: "Red"
@@ -155,7 +155,7 @@ const modules = [
                 picture: "images/white.jpeg",
                 word: "White",
                 description: "This is the colour white.",
-                audio: "White. This is the colour white.",
+                audio: "This is the colour white.",
                 question: "What colour is shown?",
                 options: ["Brown", "White", "Orange"],
                 answer: "White"
@@ -164,7 +164,7 @@ const modules = [
                 picture: "images/yellow.jpeg",
                 word: "Yellow",
                 description: "This is the colour yellow.",
-                audio: "Yellow. This is the colour yellow.",
+                audio: "This is the colour yellow.",
                 question: "What colour is shown?",
                 options: ["Yellow", "Purple", "Dark Blue"],
                 answer: "Yellow"
@@ -243,7 +243,6 @@ const modules = [
     }
 ];
 
-
 // =====================================
 // APPLICATION STATE
 // =====================================
@@ -255,7 +254,6 @@ let answeredCorrectly = false;
 let completedModules = JSON.parse(
     localStorage.getItem("completedModules") || "[]"
 );
-
 
 // =====================================
 // HOME PAGE
@@ -284,7 +282,6 @@ function loadModules() {
     });
 }
 
-
 // =====================================
 // PAGE NAVIGATION
 // =====================================
@@ -300,7 +297,6 @@ function showPage(pageId) {
     if (pageId === "progress") updateProgress();
 }
 
-
 // =====================================
 // OPEN MODULE
 // =====================================
@@ -312,7 +308,6 @@ function openModule(index) {
     showPage("lesson");
     showLesson();
 }
-
 
 // =====================================
 // DISPLAY LESSON
@@ -334,6 +329,7 @@ function showLesson() {
         const img = document.createElement("img");
         img.src = lesson.picture;
         img.alt = lesson.word;
+        img.className = "lesson-image";
 
         img.onerror = function () {
             pictureArea.textContent = "Image could not be loaded.";
@@ -347,6 +343,8 @@ function showLesson() {
     document.getElementById("lessonWord").textContent =
         lesson.word;
 
+    // Keep description available to the application,
+    // but do not display it on the lesson page.
     document.getElementById("lessonDescription").textContent =
         lesson.description;
 
@@ -356,9 +354,9 @@ function showLesson() {
     document.getElementById("feedback").textContent = "";
     document.getElementById("feedback").className = "";
 
-    document.getElementById("nextButton").disabled = true;
-
-    document.getElementById("nextButton").textContent =
+    const nextButton = document.getElementById("nextButton");
+    nextButton.disabled = true;
+    nextButton.textContent =
         currentLesson === module.lessons.length - 1
             ? "Finish Module"
             : "Next Question →";
@@ -366,10 +364,9 @@ function showLesson() {
     displayOptions(lesson);
     displayVideo(module.video);
 
-    // Automatically speak when a lesson starts
+    // Automatically speak when the lesson starts
     playAudio();
 }
-
 
 // =====================================
 // QUIZ OPTIONS
@@ -392,7 +389,6 @@ function displayOptions(lesson) {
         area.appendChild(button);
     });
 }
-
 
 // =====================================
 // CHECK ANSWER
@@ -423,7 +419,6 @@ function checkAnswer(selected, selectedButton) {
     }
 }
 
-
 // =====================================
 // NEXT LESSON
 // =====================================
@@ -452,7 +447,6 @@ function nextQuestion() {
     }
 }
 
-
 // =====================================
 // AUDIO INSTRUCTIONS
 // =====================================
@@ -473,7 +467,6 @@ function playAudio() {
     window.speechSynthesis.speak(speech);
 }
 
-
 // =====================================
 // OPTIONAL SIGN LANGUAGE VIDEO
 // =====================================
@@ -482,13 +475,10 @@ function displayVideo(videoPath) {
     const area = document.getElementById("videoArea");
     area.innerHTML = "";
 
-    const heading = document.createElement("h3");
-    heading.textContent = "Optional Sign Language Support";
-    area.appendChild(heading);
-
     const video = document.createElement("video");
     video.controls = true;
     video.preload = "metadata";
+    video.className = "lesson-video";
 
     const source = document.createElement("source");
     source.src = videoPath;
@@ -515,7 +505,6 @@ function displayVideo(videoPath) {
 
     area.appendChild(video);
 }
-
 
 // =====================================
 // PROGRESS TRACKING
@@ -545,7 +534,6 @@ function updateProgress() {
         details.appendChild(item);
     });
 }
-
 
 // =====================================
 // INITIALISE BRIGHTSTEPS
