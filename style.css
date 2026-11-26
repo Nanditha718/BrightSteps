@@ -1,4 +1,8 @@
 
+/* =====================================
+   BRIGHTSTEPS - MAIN STYLING
+===================================== */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -11,6 +15,8 @@ body {
     color: #263238;
     line-height: 1.6;
 }
+
+/* HEADER */
 
 header {
     background: #4356a1;
@@ -28,12 +34,15 @@ header p {
     font-size: 16px;
 }
 
+/* NAVIGATION */
+
 nav {
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
     gap: 12px;
-    margin-top: 15px;
+    margin: 15px auto;
 }
 
 nav button,
@@ -52,14 +61,20 @@ nav button {
     color: #4356a1;
 }
 
-button:hover,
-nav button:hover {
+button:hover {
     opacity: 0.85;
 }
 
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* MAIN CONTAINER */
+
 .container {
-    width: 90%;
-    max-width: 1100px;
+    width: 92%;
+    max-width: 1200px;
     margin: 25px auto;
 }
 
@@ -73,12 +88,25 @@ p {
     margin-bottom: 12px;
 }
 
+/* PAGE DISPLAY */
+
 .page {
     display: none;
 }
 
 .page.active {
     display: block;
+}
+
+/* HOME PAGE */
+
+.welcome {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.section-heading {
+    margin-top: 25px;
 }
 
 .module-grid {
@@ -107,101 +135,215 @@ p {
     margin-bottom: 8px;
 }
 
-.lesson-box {
+.module-emoji {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+/* LESSON PAGE */
+
+.lesson-card {
     background: white;
-    padding: 25px;
-    border-radius: 15px;
+    padding: 30px;
+    border-radius: 16px;
     text-align: center;
-    max-width: 750px;
+    width: 100%;
+    max-width: 1100px;
     margin: 20px auto;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
 }
 
-.lesson-picture {
-    font-size: 90px;
-    margin: 15px auto;
-    min-height: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Updated image size */
-.lesson-picture img {
-    width: 220px;
-    height: 220px;
-    max-width: 100%;
-    object-fit: contain;
-    border-radius: 12px;
+.back-button {
     display: block;
     margin: 15px auto;
 }
 
-#lessonWord {
-    color: #4356a1;
-    font-size: 28px;
-    margin: 12px 0;
+/* IMAGE AND VIDEO SIDE BY SIDE */
+
+.lesson-media-row {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 35px;
+    width: 100%;
+    margin: 25px auto;
 }
 
+.media-box {
+    flex: 1;
+    min-width: 0;
+    background: #f7f8ff;
+    border: 2px solid #e1e6f5;
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.media-box h3 {
+    color: #4356a1;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+/* LESSON PICTURE */
+
+.lesson-picture {
+    width: 100%;
+    min-height: 330px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 120px;
+    margin: 10px auto;
+}
+
+.lesson-picture img {
+    width: 100%;
+    max-width: 340px;
+    height: 320px;
+    object-fit: contain;
+    display: block;
+    margin: auto;
+    border-radius: 12px;
+}
+
+#lessonWord {
+    color: #4356a1;
+    font-size: 30px;
+    margin: 15px 0 5px;
+}
+
+/* HIDE DESCRIPTION TEXT */
+
 #lessonDescription {
-    font-size: 18px;
-    margin-bottom: 18px;
+    display: none;
+}
+
+/* AUDIO BUTTON */
+
+.support-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+}
+
+.primary-button {
+    background: #4356a1;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    border: none;
+}
+
+/* VIDEO */
+
+#videoArea {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#videoArea video {
+    width: 100%;
+    max-width: 480px;
+    height: 320px;
+    object-fit: contain;
+    background: #222;
+    border-radius: 12px;
+}
+
+.video-message {
+    color: #777;
+    text-align: center;
+    padding: 20px;
+}
+
+/* QUIZ */
+
+.quiz-area {
+    text-align: center;
+    margin: 25px auto;
+}
+
+.quiz-area h3 {
+    color: #34458c;
+    margin-bottom: 15px;
 }
 
 #answerOptions {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 12px;
-    margin: 20px 0;
+    align-items: center;
+    gap: 15px;
+    margin: 20px auto;
 }
 
 #answerOptions button {
-    min-width: 100px;
+    min-width: 120px;
 }
 
 #feedback {
     font-size: 18px;
     font-weight: bold;
-    margin: 15px 0;
+    margin: 15px auto;
+    text-align: center;
 }
+
+.correct {
+    color: green;
+}
+
+.try-again {
+    color: #d97706;
+}
+
+/* NEXT BUTTON */
 
 #nextButton {
-    margin-top: 12px;
+    display: block;
+    margin: 20px auto 5px;
 }
 
-#videoArea {
-    margin: 20px auto;
-    max-width: 600px;
+/* PROGRESS PAGE */
+
+.progress-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
 }
 
-#videoArea video {
+#progressBar {
     width: 100%;
-    border-radius: 10px;
+    height: 20px;
+    margin: 15px auto;
 }
 
 .progress-item {
-    background: white;
+    background: #f4f7ff;
     padding: 18px;
     border-radius: 10px;
     margin: 12px 0;
-    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.07);
+    text-align: center;
 }
 
-.progress-bar-container {
-    background: #ddd;
-    height: 18px;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-top: 10px;
+/* PROGRESS BUTTON */
+
+#progress > button {
+    display: block;
+    margin: 20px auto;
 }
 
-.progress-bar {
-    background: #4caf50;
-    height: 100%;
-    width: 0%;
-    transition: width 0.3s;
-}
+/* FOOTER */
 
 footer {
     text-align: center;
@@ -210,8 +352,12 @@ footer {
     margin-top: 30px;
 }
 
-/* Mobile screen */
-@media (max-width: 600px) {
+/* =====================================
+   MOBILE RESPONSIVE DESIGN
+===================================== */
+
+@media (max-width: 700px) {
+
     header h1 {
         font-size: 24px;
     }
@@ -220,16 +366,43 @@ footer {
         width: 95%;
     }
 
-    .lesson-box {
-        padding: 18px;
+    .lesson-card {
+        padding: 15px;
+    }
+
+    .lesson-media-row {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .media-box {
+        width: 100%;
+    }
+
+    .lesson-picture {
+        min-height: 250px;
+        font-size: 90px;
     }
 
     .lesson-picture img {
-        width: 180px;
-        height: 180px;
+        width: 100%;
+        max-width: 300px;
+        height: 260px;
+    }
+
+    #videoArea video {
+        height: 250px;
     }
 
     #lessonWord {
-        font-size: 24px;
+        font-size: 25px;
+    }
+
+    #answerOptions {
+        gap: 10px;
+    }
+
+    #answerOptions button {
+        min-width: 100px;
     }
 }
