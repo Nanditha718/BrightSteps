@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Learning World</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+    <h1>🌈 Bright Steps</h1>
+    <p>Learn • Play • Explore</p>
+</header>
+
+<nav class="navbar">
+    <button onclick="showPage('home')">🏠 Home</button>
+    <button onclick="showPage('progress')">🏆 My Progress</button>
+</nav>
+
+<main class="container">
+
+    <!-- HOME PAGE -->
+    <section id="home" class="page active">
+
+        <div class="welcome">
+            <h2>Welcome to Bright Steps!</h2>
+            <p>Choose a topic and start learning.</p>
+        </div>
+
+        <h2 class="section-heading">Choose a Learning Module</h2>
+
+        <div id="moduleGrid" class="module-grid"></div>
+
+    </section>
+
+
+    <!-- LESSON PAGE -->
+    <section id="lesson" class="page">
+
+        <button class="back-button" onclick="showPage('home')">
+            ← Back to Modules
+        </button>
+
+        <div class="lesson-card">
+
+            <h2 id="lessonTitle">Lesson</h2>
+
+            <div id="lessonPicture" class="lesson-picture"></div>
+
+            <h2 id="lessonWord"></h2>
+
+            <p id="lessonDescription"></p>
+
+            <div class="support-buttons">
+                <button id="audioButton" class="primary-button"
+                        onclick="playAudio()">
+                    🔊 Listen
+                </button>
+            </div>
+
+            <div id="videoArea" class="video-area"></div>
+
+            <hr>
+
+            <div class="quiz-area">
+                <h3 id="questionText">Question</h3>
+                <div id="answerOptions"></div>
+                <p id="feedback" aria-live="polite"></p>
+            </div>
+
+            <button id="nextButton" class="primary-button"
+                    onclick="nextQuestion()">
+                Next Question →
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- PROGRESS PAGE -->
+    <section id="progress" class="page">
+
+        <div class="progress-card">
+            <h2>🏆 My Learning Progress</h2>
+
+            <p id="progressText">0 of 5 modules completed</p>
+
+            <progress id="progressBar" value="0" max="5"></progress>
+
+            <div id="progressDetails"></div>
+
+            <p class="encouragement">
+                Keep learning and exploring! 🌟
+            </p>
+        </div>
+
+        <button class="primary-button"
+                onclick="showPage('home')">
+            Back to Home
+        </button>
+
+    </section>
+
+</main>
+
+<footer>
+    <p>My Learning World | Educational Learning Application</p>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
