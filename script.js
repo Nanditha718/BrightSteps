@@ -442,7 +442,8 @@ function nextQuestion() {
             );
         }
 
-        alert("🌟 Great work! You completed " + module.name + "!");
+document.getElementById("progressText").textContent =
+    "🌟 Great work! You completed " + module.name + "!";
         showPage("progress");
     }
 }
