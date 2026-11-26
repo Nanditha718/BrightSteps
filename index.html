@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Learning World</title>
+    <title>BrightSteps</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <header class="header">
-    <h1>🌈 Bright Steps</h1>
+    <h1>🌈 BrightSteps</h1>
     <p>Learn • Play • Explore</p>
 </header>
 
@@ -26,7 +26,7 @@
     <section id="home" class="page active">
 
         <div class="welcome">
-            <h2>Welcome to Bright Steps!</h2>
+            <h2>Welcome to BrightSteps!</h2>
             <p>Choose a topic and start learning.</p>
         </div>
 
@@ -35,7 +35,6 @@
         <div id="moduleGrid" class="module-grid"></div>
 
     </section>
-
 
     <!-- LESSON PAGE -->
     <section id="lesson" class="page">
@@ -48,11 +47,24 @@
 
             <h2 id="lessonTitle">Lesson</h2>
 
-            <div id="lessonPicture" class="lesson-picture"></div>
+            <!-- IMAGE AND VIDEO SIDE BY SIDE -->
+            <div class="lesson-media-row">
 
-            <h2 id="lessonWord"></h2>
+                <div class="media-box">
+                    <h3>Picture Learning</h3>
+                    <div id="lessonPicture" class="lesson-picture"></div>
+                    <h2 id="lessonWord"></h2>
+                </div>
 
-            <p id="lessonDescription"></p>
+                <div class="media-box">
+                    <h3>Sign Language Support</h3>
+                    <div id="videoArea" class="video-area"></div>
+                </div>
+
+            </div>
+
+            <!-- Kept for JavaScript, but not displayed -->
+            <p id="lessonDescription" hidden></p>
 
             <div class="support-buttons">
                 <button id="audioButton" class="primary-button"
@@ -61,13 +73,14 @@
                 </button>
             </div>
 
-            <div id="videoArea" class="video-area"></div>
-
             <hr>
 
+            <!-- QUIZ -->
             <div class="quiz-area">
                 <h3 id="questionText">Question</h3>
+
                 <div id="answerOptions"></div>
+
                 <p id="feedback" aria-live="polite"></p>
             </div>
 
@@ -79,7 +92,6 @@
         </div>
 
     </section>
-
 
     <!-- PROGRESS PAGE -->
     <section id="progress" class="page">
@@ -108,7 +120,7 @@
 </main>
 
 <footer>
-    <p>My Learning World | Educational Learning Application</p>
+    <p>BrightSteps | Educational Learning Application</p>
 </footer>
 
 <script src="script.js"></script>
