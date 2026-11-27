@@ -48,7 +48,7 @@ const modules = [
                 picture: "🍓",
                 word: "Number 1",
                 description: "This is one strawberry.",
-                audio: "Number one. This is one strawberry.",
+                audio: "This is the number one.",
                 question: "What number is this?",
                 options: ["1", "2", "3"],
                 answer: "1"
@@ -57,7 +57,7 @@ const modules = [
                 picture: "🍓 🍓",
                 word: "Number 2",
                 description: "These are two strawberries.",
-                audio: "Number two. These are two strawberries.",
+                audio: "This is the number two.",
                 question: "How many strawberries are there?",
                 options: ["1", "2", "3"],
                 answer: "2"
@@ -66,7 +66,7 @@ const modules = [
                 picture: "🍓 🍓 🍓",
                 word: "Number 3",
                 description: "These are three strawberries.",
-                audio: "Number three. These are three strawberries.",
+                audio: "This is the number three.",
                 question: "How many strawberries are there?",
                 options: ["1", "2", "3"],
                 answer: "3"
@@ -77,10 +77,10 @@ const modules = [
     {
         name: "Colours",
         emoji: "🎨",
-        video: "videos/colours-isl.mp4",
         lessons: [
             {
                 picture: "images/blue.jpeg",
+                video: "videos/blue.mp4",
                 word: "Blue",
                 description: "This is the colour blue.",
                 audio: "This is the colour blue.",
@@ -90,6 +90,7 @@ const modules = [
             },
             {
                 picture: "images/brown.jpeg",
+                video: "videos/brown.mp4",
                 word: "Brown",
                 description: "This is the colour brown.",
                 audio: "This is the colour brown.",
@@ -98,16 +99,18 @@ const modules = [
                 answer: "Brown"
             },
             {
-                picture: "images/darkblue.jpeg",
-                word: "Dark Blue",
-                description: "This is the colour dark blue.",
-                audio: "This is the colour dark blue.",
+                picture: "images/black.jpeg",
+                video: "videos/black.mp4",
+                word: "Black",
+                description: "This is the colour black.",
+                audio: "This is the colour black.",
                 question: "What colour is shown?",
-                options: ["Dark Blue", "Orange", "White"],
-                answer: "Dark Blue"
+                options: ["Black", "Orange", "White"],
+                answer: "Black"
             },
             {
                 picture: "images/green.jpeg",
+                video: "videos/green.mp4",
                 word: "Green",
                 description: "This is the colour green.",
                 audio: "This is the colour green.",
@@ -117,6 +120,7 @@ const modules = [
             },
             {
                 picture: "images/orange.jpeg",
+                video: "videos/orange.mp4",
                 word: "Orange",
                 description: "This is the colour orange.",
                 audio: "This is the colour orange.",
@@ -126,6 +130,7 @@ const modules = [
             },
             {
                 picture: "images/pink.jpeg",
+                video: "videos/pink.mp4",
                 word: "Pink",
                 description: "This is the colour pink.",
                 audio: "This is the colour pink.",
@@ -135,6 +140,7 @@ const modules = [
             },
             {
                 picture: "images/purple.jpeg",
+                video: "videos/purple.mp4",
                 word: "Purple",
                 description: "This is the colour purple.",
                 audio: "This is the colour purple.",
@@ -144,6 +150,7 @@ const modules = [
             },
             {
                 picture: "images/red.jpeg",
+                video: "videos/red.mp4",
                 word: "Red",
                 description: "This is the colour red.",
                 audio: "This is the colour red.",
@@ -153,6 +160,7 @@ const modules = [
             },
             {
                 picture: "images/white.jpeg",
+                video: "videos/white.mp4",
                 word: "White",
                 description: "This is the colour white.",
                 audio: "This is the colour white.",
@@ -162,11 +170,12 @@ const modules = [
             },
             {
                 picture: "images/yellow.jpeg",
+                video: "videos/yellow.mp4",
                 word: "Yellow",
                 description: "This is the colour yellow.",
                 audio: "This is the colour yellow.",
                 question: "What colour is shown?",
-                options: ["Yellow", "Purple", "Dark Blue"],
+                options: ["Yellow", "Purple", "Black"],
                 answer: "Yellow"
             }
         ]
@@ -343,8 +352,6 @@ function showLesson() {
     document.getElementById("lessonWord").textContent =
         lesson.word;
 
-    // Keep description available to the application,
-    // but do not display it on the lesson page.
     document.getElementById("lessonDescription").textContent =
         lesson.description;
 
@@ -355,6 +362,7 @@ function showLesson() {
     document.getElementById("feedback").className = "";
 
     const nextButton = document.getElementById("nextButton");
+
     nextButton.disabled = true;
     nextButton.textContent =
         currentLesson === module.lessons.length - 1
@@ -362,9 +370,12 @@ function showLesson() {
             : "Next Question →";
 
     displayOptions(lesson);
-    displayVideo(module.video);
 
-    // Automatically speak when the lesson starts
+    // Use individual video for each colour lesson.
+    // Other modules continue using their module video.
+    displayVideo(lesson.video || module.video);
+
+    // Automatically speak when the lesson starts.
     playAudio();
 }
 
@@ -411,6 +422,7 @@ function checkAnswer(selected, selectedButton) {
         });
 
         selectedButton.textContent += " ✓";
+
         document.getElementById("nextButton").disabled = false;
 
     } else {
@@ -442,8 +454,7 @@ function nextQuestion() {
             );
         }
 
-document.getElementById("progressText").textContent =
-    "🌟 Great work! You completed " + module.name + "!";
+        // No browser popup after completing a module.
         showPage("progress");
     }
 }
