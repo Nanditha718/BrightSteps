@@ -3,6 +3,41 @@
 // BRIGHTSTEPS - APPLICATION DATA
 // =====================================
 
+const numberWords = [
+    "One", "Two", "Three", "Four", "Five",
+    "Six", "Seven", "Eight", "Nine", "Ten",
+    "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen",
+    "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"
+];
+
+const numberLessons = numberWords.map((word, index) => {
+    const number = index + 1;
+
+    let options;
+
+    if (number === 1) {
+        options = ["1", "2", "3"];
+    } else if (number === 20) {
+        options = ["20", "19", "18"];
+    } else {
+        options = [
+            String(number),
+            String(number + 1),
+            String(number - 1)
+        ];
+    }
+
+    return {
+        picture: `images/${number}.jpeg`,
+        word: `Number ${number}`,
+        description: `This is ${word.toLowerCase()}.`,
+        audio: word,
+        question: "What number is this?",
+        options: options,
+        answer: String(number)
+    };
+});
+
 const modules = [
     {
         name: "Alphabets",
@@ -43,35 +78,7 @@ const modules = [
         name: "Numbers",
         emoji: "🔢",
         video: "videos/numbers-isl.mp4",
-        lessons: [
-            {
-                picture: "🍓",
-                word: "Number 1",
-                description: "This is one strawberry.",
-                audio: "One",
-                question: "What number is this?",
-                options: ["1", "2", "3"],
-                answer: "1"
-            },
-            {
-                picture: "🍓 🍓",
-                word: "Number 2",
-                description: "These are two strawberries.",
-                audio: "Two",
-                question: "How many strawberries are there?",
-                options: ["1", "2", "3"],
-                answer: "2"
-            },
-            {
-                picture: "🍓 🍓 🍓",
-                word: "Number 3",
-                description: "These are three strawberries.",
-                audio: "Three",
-                question: "How many strawberries are there?",
-                options: ["1", "2", "3"],
-                answer: "3"
-            }
-        ]
+        lessons: numberLessons
     },
 
     {
@@ -329,7 +336,6 @@ function showLesson() {
 
     answeredCorrectly = false;
 
-    // Stop previous lesson audio
     if ("speechSynthesis" in window) {
         window.speechSynthesis.cancel();
     }
@@ -378,7 +384,6 @@ function showLesson() {
 
     displayOptions(lesson);
 
-    // Start the lesson video and audio
     displayVideo(lesson.video || module.video, lesson.audio);
 }
 
@@ -504,7 +509,6 @@ function displayVideo(videoPath, audioText) {
 
         playbackStarted = true;
 
-        // Start video and spoken audio together
         video.play().catch(error => {
             console.log("Video autoplay was blocked:", error);
         });
@@ -530,13 +534,11 @@ function displayVideo(videoPath, audioText) {
 
         area.appendChild(message);
 
-        // Still play the spoken lesson if the video fails
         playAudio(audioText);
     }, { once: true });
 
     area.appendChild(video);
 
-    // Also attempt playback immediately
     video.load();
 
     video.play().then(() => {
