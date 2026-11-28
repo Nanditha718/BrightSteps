@@ -48,7 +48,7 @@ const modules = [
                 picture: "🍓",
                 word: "Number 1",
                 description: "This is one strawberry.",
-                audio: "This is the number one.",
+                audio: "One",
                 question: "What number is this?",
                 options: ["1", "2", "3"],
                 answer: "1"
@@ -57,7 +57,7 @@ const modules = [
                 picture: "🍓 🍓",
                 word: "Number 2",
                 description: "These are two strawberries.",
-                audio: "This is the number two.",
+                audio: "Two",
                 question: "How many strawberries are there?",
                 options: ["1", "2", "3"],
                 answer: "2"
@@ -66,7 +66,7 @@ const modules = [
                 picture: "🍓 🍓 🍓",
                 word: "Number 3",
                 description: "These are three strawberries.",
-                audio: "This is the number three.",
+                audio: "Three",
                 question: "How many strawberries are there?",
                 options: ["1", "2", "3"],
                 answer: "3"
@@ -77,6 +77,7 @@ const modules = [
     {
         name: "Colours",
         emoji: "🎨",
+        video: "videos/colours-isl.mp4",
         lessons: [
             {
                 picture: "images/blue.jpeg",
@@ -328,6 +329,11 @@ function showLesson() {
 
     answeredCorrectly = false;
 
+    // Stop previous lesson audio
+    if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+    }
+
     document.getElementById("lessonTitle").textContent =
         module.name + " - Lesson " + (currentLesson + 1);
 
@@ -336,6 +342,7 @@ function showLesson() {
 
     if (lesson.picture.startsWith("images/")) {
         const img = document.createElement("img");
+
         img.src = lesson.picture;
         img.alt = lesson.word;
         img.className = "lesson-image";
@@ -371,12 +378,8 @@ function showLesson() {
 
     displayOptions(lesson);
 
-    // Use individual video for each colour lesson.
-    // Other modules continue using their module video.
-    displayVideo(lesson.video || module.video);
-
-    // Automatically speak when the lesson starts.
-    playAudio();
+    // Start the lesson video and audio
+    displayVideo(lesson.video || module.video, lesson.audio);
 }
 
 // =====================================
@@ -422,7 +425,6 @@ function checkAnswer(selected, selectedButton) {
         });
 
         selectedButton.textContent += " ✓";
-
         document.getElementById("nextButton").disabled = false;
 
     } else {
@@ -454,7 +456,6 @@ function nextQuestion() {
             );
         }
 
-        // No browser popup after completing a module.
         showPage("progress");
     }
 }
@@ -463,14 +464,12 @@ function nextQuestion() {
 // AUDIO INSTRUCTIONS
 // =====================================
 
-function playAudio() {
-    const lesson = modules[currentModule].lessons[currentLesson];
-
+function playAudio(audioText) {
     if (!("speechSynthesis" in window)) return;
 
     window.speechSynthesis.cancel();
 
-    const speech = new SpeechSynthesisUtterance(lesson.audio);
+    const speech = new SpeechSynthesisUtterance(audioText);
 
     speech.lang = "en-IN";
     speech.rate = 0.75;
@@ -480,42 +479,74 @@ function playAudio() {
 }
 
 // =====================================
-// OPTIONAL SIGN LANGUAGE VIDEO
+// AUTOMATIC VIDEO AND AUDIO PLAYBACK
 // =====================================
 
-function displayVideo(videoPath) {
+function displayVideo(videoPath, audioText) {
     const area = document.getElementById("videoArea");
     area.innerHTML = "";
 
     const video = document.createElement("video");
+
     video.controls = true;
-    video.preload = "metadata";
+    video.autoplay = true;
+    video.muted = true;
+    video.playsInline = true;
+    video.preload = "auto";
     video.className = "lesson-video";
 
-    const source = document.createElement("source");
-    source.src = videoPath;
-    source.type = "video/mp4";
+    video.src = videoPath;
 
-    video.appendChild(source);
+    let playbackStarted = false;
 
-    video.appendChild(
-        document.createTextNode(
-            "Your browser does not support video playback."
-        )
-    );
+    function startLessonMedia() {
+        if (playbackStarted) return;
+
+        playbackStarted = true;
+
+        // Start video and spoken audio together
+        video.play().catch(error => {
+            console.log("Video autoplay was blocked:", error);
+        });
+
+        playAudio(audioText);
+    }
+
+    video.addEventListener("canplay", startLessonMedia, {
+        once: true
+    });
 
     video.addEventListener("error", () => {
+        if ("speechSynthesis" in window) {
+            window.speechSynthesis.cancel();
+        }
+
         video.remove();
 
         const message = document.createElement("p");
         message.className = "video-message";
         message.textContent =
-            "No ISL video has been added for this module yet.";
+            "The sign-language video could not be loaded.";
 
         area.appendChild(message);
-    });
+
+        // Still play the spoken lesson if the video fails
+        playAudio(audioText);
+    }, { once: true });
 
     area.appendChild(video);
+
+    // Also attempt playback immediately
+    video.load();
+
+    video.play().then(() => {
+        if (!playbackStarted) {
+            playbackStarted = true;
+            playAudio(audioText);
+        }
+    }).catch(error => {
+        console.log("Waiting for video playback:", error);
+    });
 }
 
 // =====================================
